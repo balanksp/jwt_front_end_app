@@ -3,15 +3,16 @@ import React, { useState } from 'react';
 const RegisterPage = () => {
   // State to manage form input values
   const [formData, setFormData] = useState({
-    username: '',
+    name: '',
     email: '',
     password: '',
-    role: ''
+    roles: ''
   });
 
   // State to manage form submission status
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionStatus, setSubmissionStatus] = useState('');
+  const [isUserExists, setIsUserExists] = useState(false);
 
   // Example roles for the dropdown
   const roles = ['ROLE_ADMIN', 'ROLE_USER'];
@@ -33,8 +34,9 @@ const RegisterPage = () => {
 
     try {
       console.log('Form data:', formData);
+
       // Make an API call to submit the form data
-      const response = await fetch('http://localhost:9052/login/new', {
+      const response = await fetch('http://localhost:9052/login/Register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -43,32 +45,33 @@ const RegisterPage = () => {
       });
 
       console.log('Response headers:', response.headers.get('Content-Type'));
-
-
       console.log('Response status:', response.status);
-
-
+       
+      const responseBody = await response.text();
+ 
       if (!response.ok) {
-        console.error('Network response was not ok');
+        // console.error('Network response was not ok'); 
+        setSubmissionStatus(responseBody.message || 'Registration failed. Please try again.');
+        console.log('----------->',responseBody.message);
+        setIsUserExists(true);
         throw new Error('Network response was not ok');
       }
 
+      setSubmissionStatus(responseBody.message || 'Registration successful!');
+      setIsUserExists(false); // Set user exists flag to false
+      // setFormData({
+      //   name: '',
+      //   email: '',
+      //   password: '',
+      //   roles: ''
+      // });
+
       // Read the response as text for logging
-      const responseText = await response.text();
-      console.log('Response text:', responseText);
-      setSubmissionStatus('Registration successful!');
+      // const responseText = await response.text();
+      // console.log('Response text:', responseText);
+      // setSubmissionStatus('Registration successful!');
     }
-    // try {
-    //   const responseBody = JSON.parse(responseText);
-    //   console.log('Response body:', responseBody);
-    //   setSubmissionStatus('Registration successful!');
-    // }
-    //   catch (error) {
-    //     console.error('Error parsing JSON:', jsonError);
-    //     setSubmissionStatus('Registration successful, but received non-JSON response.');
-    //   }
-    //   console.log('Success:', responseBody);
-    // }
+    
     catch (error) {
       console.error('Error:', error);
       setSubmissionStatus('Registration failed. Please try again.');
@@ -84,14 +87,15 @@ const RegisterPage = () => {
       <h1>Register the user</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="username">Username:</label>
+          <label htmlFor="name">Username:</label>
           <input
             type="text"
-            id="username"
-            name="username"
+            id="name"
+            name="name"
             value={formData.username}
             onChange={handleChange}
             required
+            disabled={isUserExists}
           />
         </div>
         <div>
@@ -103,6 +107,7 @@ const RegisterPage = () => {
             value={formData.email}
             onChange={handleChange}
             required
+            disabled={isUserExists}
           />
         </div>
         <div>
@@ -114,16 +119,18 @@ const RegisterPage = () => {
             value={formData.password}
             onChange={handleChange}
             required
+            disabled={isUserExists}
           />
         </div>
         <div>
-          <label htmlFor="role">Role:</label>
+          <label htmlFor="roles">Role:</label>
           <select
-            id="role"
-            name="role"
-            value={formData.role}
+            id="roles"
+            name="roles"
+            value={formData.roles}
             onChange={handleChange}
             required
+            disabled={isUserExists}
           >
             <option value="" disabled>Select a role</option>
             {roles.map((role) => (
@@ -131,7 +138,7 @@ const RegisterPage = () => {
             ))}
           </select>
         </div>
-        <button type="submit" disabled={isSubmitting}>
+        <button type="submit" disabled={isUserExists || isSubmitting}>
           {isSubmitting ? 'Submitting...' : 'Register'}
         </button>
       </form>

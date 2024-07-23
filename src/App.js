@@ -12,6 +12,7 @@ function App() {
 
     {/* <LoginPage></LoginPage> */}
     <RegisterPage></RegisterPage>
+
     </>
     // <div>
     //   <Router>
