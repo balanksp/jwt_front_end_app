@@ -1,19 +1,21 @@
 import './App.css';
+import AdminPage from './components/AdminPage';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
-import { Router } from 'react-router-dom';
-import { Routes,Route } from 'react-router-dom';
-
-console.log(LoginPage, RegisterPage);
+import { BrowserRouter as  Route, Routes  } from 'react-router-dom';
+import UserPage from './components/UserPage';
 
 function App() {
   return (
-    <>
 
-    {/* <LoginPage></LoginPage> */}
-    <RegisterPage></RegisterPage>
+   <>
+           <RegisterPage></RegisterPage>
+           <LoginPage></LoginPage>
+            <AdminPage></AdminPage>
+            <UserPage></UserPage>
+   </>
 
-    </>
+   
     // <div>
     //   <Router>
     //     <Routes>
@@ -22,6 +24,25 @@ function App() {
     //     </Routes>
     //   </Router>
     // </div>
+
+  //   <Router>
+  //   <Switch>
+  //     <Route path="/register" component={RegisterPage} />
+  //     <Route path="/login" component={LoginPage} />
+  //     <Route path="/" component={LoginPage} /> {/* Default route to login */}
+  //   </Switch>
+  // </Router>
+
+  // <div>
+  // <Routes >
+  //   <Route path="/register" component={RegisterPage} />
+  //   <Route path="/login" component={LoginPage} />
+  //   {/* <Route path="/admin" component={AdminPage} /> */}
+  //   {/* <Route path="/product/:id" component={UserPage} /> */}
+  //   {/* <Route path="/" component={LoginPage} />  */}
+  // </Routes >  
+  // </div>
+
   );
 }
 
