@@ -2,7 +2,8 @@ import './App.css';
 import AdminPage from './components/AdminPage';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
-import { BrowserRouter as  Route, Routes  } from 'react-router-dom';
+// import { BrowserRouter as  Route, Routes  } from 'react-router-dom';
+import { Route, Routes  } from 'react-router-dom';
 import UserPage from './components/UserPage';
 
 function App() {
@@ -33,15 +34,15 @@ function App() {
   //   </Switch>
   // </Router>
 
-  // <div>
+  // <>
   // <Routes >
   //   <Route path="/register" component={RegisterPage} />
   //   <Route path="/login" component={LoginPage} />
-  //   {/* <Route path="/admin" component={AdminPage} /> */}
-  //   {/* <Route path="/product/:id" component={UserPage} /> */}
-  //   {/* <Route path="/" component={LoginPage} />  */}
+  //   <Route path="/admin" component={AdminPage} /> 
+  //   <Route path="/product/:id" component={UserPage} />
+  //   <Route path="/" component={LoginPage} /> 
   // </Routes >  
-  // </div>
+  // </>
 
   );
 }
